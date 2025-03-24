@@ -6,7 +6,7 @@ A desktop accounting system built with JavaFX, featuring voucher management, led
 
 ### Required Tools
 
-- JDK 17
+- JDK 23
 - Maven
 - IntelliJ IDEA (recommended)
 - Scene Builder (for FXML editing)
@@ -15,7 +15,7 @@ A desktop accounting system built with JavaFX, featuring voucher management, led
 
 1. Clone the repository
 2. Open in IntelliJ IDEA
-3. Ensure JDK 17 is configured
+3. Ensure JDK 23 is configured
 4. Run `mvn clean install`
 5. Run `AccountingSystemApplication.java`
 
@@ -73,7 +73,7 @@ src/
 1. **Setup**
 
    - Clone repository
-   - Configure JDK 17
+   - Configure JDK 23
    - Import Maven dependencies
 
 2. **Development**
