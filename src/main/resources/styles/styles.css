@@ -1,0 +1,54 @@
+.root {
+  -fx-background-color: #f5f5f5;
+}
+
+.label {
+  -fx-font-size: 14px;
+}
+
+.text-field,
+.password-field {
+  -fx-pref-width: 200px;
+  -fx-padding: 8px;
+  -fx-background-radius: 4px;
+  -fx-border-radius: 4px;
+  -fx-border-color: #cccccc;
+}
+
+.text-field:focused,
+.password-field:focused {
+  -fx-border-color: #2196f3;
+  -fx-border-width: 2px;
+}
+
+.button {
+  -fx-pref-width: 100px;
+  -fx-padding: 8px;
+  -fx-background-radius: 4px;
+  -fx-border-radius: 4px;
+  -fx-font-size: 14px;
+  -fx-cursor: hand;
+}
+
+.button:hover {
+  -fx-opacity: 0.8;
+}
+
+#loginButton {
+  -fx-background-color: #2196f3;
+  -fx-text-fill: white;
+}
+
+#cancelButton {
+  -fx-background-color: #f44336;
+  -fx-text-fill: white;
+}
+
+.check-box {
+  -fx-font-size: 14px;
+}
+
+.error-label {
+  -fx-text-fill: #f44336;
+  -fx-font-size: 12px;
+}
