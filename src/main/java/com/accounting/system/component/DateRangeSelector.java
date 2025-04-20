@@ -142,4 +142,33 @@ public class DateRangeSelector extends VBox {
         }
     }
 
+    private void clear() {
+        startDatePicker.setValue(null);
+        endDatePicker.setValue(null);
+        presetPeriods.setValue("Custom");
+    }
+
+    public LocalDate getStartDate() {
+        return startDate.get();
+    }
+
+    public ObjectProperty<LocalDate> startDateProperty() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate date) {
+        startDatePicker.setValue(date);
+    }
+
+    public LocalDate getEndDate() {
+        return endDate.get();
+    }
+
+    public ObjectProperty<LocalDate> endDateProperty() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate date) {
+        endDatePicker.setValue(date);
+    }
 } 
