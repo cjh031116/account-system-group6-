@@ -82,4 +82,87 @@ public class VoucherListController {
         voucherTable.getSortOrder().add(dateColumn);
     }
 
+    private void setupFilters() {
+        // Setup date filters
+        startDatePicker.setValue(LocalDate.now().minusMonths(1));
+        endDatePicker.setValue(LocalDate.now());
+
+        // Setup status filter
+        statusFilter.setItems(FXCollections.observableArrayList(
+            "All", "DRAFT", "POSTED", "VERIFIED"
+        ));
+        statusFilter.setValue("All");
+
+        // Setup filtered list
+        filteredVouchers = new FilteredList<>(vouchers);
+        voucherTable.setItems(filteredVouchers);
+
+        // Apply filters when changed
+        startDatePicker.valueProperty().addListener((obs, old, newVal) -> applyFilters());
+        endDatePicker.valueProperty().addListener((obs, old, newVal) -> applyFilters());
+        searchField.textProperty().addListener((obs, old, newVal) -> applyFilters());
+        statusFilter.valueProperty().addListener((obs, old, newVal) -> applyFilters());
+    }
+
+    private void applyFilters() {
+        filteredVouchers.setPredicate(voucher -> {
+            boolean matchesDate = voucher.getDate().compareTo(startDatePicker.getValue()) >= 0
+                && voucher.getDate().compareTo(endDatePicker.getValue()) <= 0;
+
+            boolean matchesStatus = statusFilter.getValue().equals("All")
+                || voucher.getStatus().equals(statusFilter.getValue());
+
+            boolean matchesSearch = searchField.getText().isEmpty()
+                || voucher.getVoucherNo().contains(searchField.getText())
+                || voucher.getDescription().toLowerCase()
+                    .contains(searchField.getText().toLowerCase());
+
+            return matchesDate && matchesStatus && matchesSearch;
+        });
+    }
+
+    private void loadVouchers() {
+        vouchers.setAll(voucherService.getAllVouchers());
+        applyFilters();
+    }
+
+    private void handleEdit(Voucher voucher) {
+        if (voucher != null) {
+            // Open voucher edit window
+            // VoucherEntryDialog.show(voucher);
+            loadVouchers(); // Refresh after edit
+        }
+    }
+
+    private void handleDelete(Voucher voucher) {
+        if (voucher != null) {
+            Optional<ButtonType> result = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to delete voucher " + voucher.getVoucherNo() + "?",
+                ButtonType.YES, ButtonType.NO).showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.YES) {
+                try {
+                    voucherService.deleteVoucher(voucher.getId());
+                    loadVouchers(); // Refresh after delete
+                    new Alert(Alert.AlertType.INFORMATION,
+                        "Voucher deleted successfully").show();
+                } catch (Exception e) {
+                    new Alert(Alert.AlertType.ERROR,
+                        "Failed to delete: " + e.getMessage()).show();
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void handleNew() {
+        // Open new voucher entry window
+        // VoucherEntryDialog.show();
+        loadVouchers(); // Refresh after new entry
+    }
+
+    @FXML
+    private void handleRefresh() {
+        loadVouchers();
+    }
 } 
