@@ -173,4 +173,89 @@ public class VoucherEntryController {
         clearEntryForm();
         updateTotals();
     }
+
+    private void clearEntryForm() {
+        accountComboBox.setValue(null);
+        entryDescriptionField.clear();
+        debitField.clear();
+        creditField.clear();
+    }
+
+    private double parseAmount(String text) {
+        try {
+            return text.isEmpty() ? 0 : Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    private void updateTotals() {
+        double totalDebit = entries.stream().mapToDouble(VoucherEntry::getDebit).sum();
+        double totalCredit = entries.stream().mapToDouble(VoucherEntry::getCredit).sum();
+
+        totalDebitLabel.setText(String.format("%.2f", totalDebit));
+        totalCreditLabel.setText(String.format("%.2f", totalCredit));
+    }
+
+    @FXML
+    private void handleSave() {
+        if (entries.isEmpty()) {
+            Utils.showError("错误", "请至少添加一条分录");
+            return;
+        }
+
+        if (!isBalanced()) {
+            Utils.showError("错误", "借贷不平衡");
+            return;
+        }
+
+        currentVoucher.setDate(datePicker.getValue());
+        currentVoucher.setDescription(descriptionField.getText().trim());
+        currentVoucher.setEntries(entries);
+
+        try {
+            if (currentVoucher.getId() == null) {
+                voucherService.createVoucher(currentVoucher);
+            } else {
+                voucherService.updateVoucher(currentVoucher);
+            }
+            Utils.showInfo("成功", "保存成功");
+            initializeNewVoucher();
+        } catch (Exception e) {
+            Utils.showError("错误", "保存失败：" + e.getMessage());
+        }
+    }
+
+    private boolean isBalanced() {
+        double totalDebit = entries.stream().mapToDouble(VoucherEntry::getDebit).sum();
+        double totalCredit = entries.stream().mapToDouble(VoucherEntry::getCredit).sum();
+        return Math.abs(totalDebit - totalCredit) < 0.01;
+    }
+
+    @FXML
+    private void handleClear() {
+        if (Utils.showConfirmation("确认", "确定要清空所有数据吗？")) {
+            initializeNewVoucher();
+        }
+    }
+
+    @FXML
+    private void handleClose() {
+        if (!entries.isEmpty()) {
+            if (!Utils.showConfirmation("确认", "有未保存的数据，确定要关闭吗？")) {
+                return;
+            }
+        }
+        Stage stage = (Stage) voucherNoField.getScene().getWindow();
+        stage.close();
+    }
+
+    public void setVoucher(Voucher voucher) {
+        this.currentVoucher = voucher;
+        voucherNoField.setText(voucher.getVoucherNo());
+        datePicker.setValue(voucher.getDate());
+        descriptionField.setText(voucher.getDescription());
+        entries.setAll(voucher.getEntries());
+        updateTotals();
+    }
 } 
