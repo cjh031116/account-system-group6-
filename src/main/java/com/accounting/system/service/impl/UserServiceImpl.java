@@ -13,4 +13,49 @@ public class UserServiceImpl implements UserService {
         this.prefs = Preferences.userNodeForPackage(UserServiceImpl.class);
     }
 
+    @Override
+    public boolean authenticate(String username, String password) {
+        // TODO: Implement actual authentication against database
+        // For now, accept any non-empty credentials
+        if (username != null && !username.isEmpty() && password != null && !password.isEmpty()) {
+            currentUser = username;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void saveUsername(String username) {
+        prefs.put(PREF_USERNAME, username);
+    }
+
+    @Override
+    public String getSavedUsername() {
+        return prefs.get(PREF_USERNAME, "");
+    }
+
+    @Override
+    public void clearSavedUsername() {
+        prefs.remove(PREF_USERNAME);
+    }
+
+    @Override
+    public void startSession(String username) {
+        currentUser = username;
+    }
+
+    @Override
+    public void endSession() {
+        currentUser = null;
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return currentUser != null;
+    }
+
+    @Override
+    public String getCurrentUser() {
+        return currentUser;
+    }
 } 
