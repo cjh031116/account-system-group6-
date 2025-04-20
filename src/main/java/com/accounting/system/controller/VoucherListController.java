@@ -126,6 +126,33 @@ public class VoucherListController {
         applyFilters();
     }
 
+    private void handleEdit(Voucher voucher) {
+        if (voucher != null) {
+            // Open voucher edit window
+            // VoucherEntryDialog.show(voucher);
+            loadVouchers(); // Refresh after edit
+        }
+    }
+
+    private void handleDelete(Voucher voucher) {
+        if (voucher != null) {
+            Optional<ButtonType> result = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to delete voucher " + voucher.getVoucherNo() + "?",
+                ButtonType.YES, ButtonType.NO).showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.YES) {
+                try {
+                    voucherService.deleteVoucher(voucher.getId());
+                    loadVouchers(); // Refresh after delete
+                    new Alert(Alert.AlertType.INFORMATION,
+                        "Voucher deleted successfully").show();
+                } catch (Exception e) {
+                    new Alert(Alert.AlertType.ERROR,
+                        "Failed to delete: " + e.getMessage()).show();
+                }
+            }
+        }
+    }
     
     @FXML
     private void handleNew() {
