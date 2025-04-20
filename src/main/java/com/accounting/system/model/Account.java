@@ -18,12 +18,20 @@ public class Account {
     private LocalDateTime createdDate;
     private String lastModifiedBy;
     private LocalDateTime lastModifiedDate;
+    private Integer level;
+    private String currency;
+    private Boolean isSystemAccount;
+    private String tags;
+    private String notes;
 
     public Account() {
         this.openingBalance = BigDecimal.ZERO;
         this.currentBalance = BigDecimal.ZERO;
         this.isGroup = false;
         this.isActive = true;
+        this.isSystemAccount = false;
+        this.level = 1;
+        this.currency = "CNY";
         this.createdDate = LocalDateTime.now();
     }
 
@@ -138,5 +146,67 @@ public class Account {
 
     public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public Boolean getIsSystemAccount() {
+        return isSystemAccount;
+    }
+
+    public void setIsSystemAccount(Boolean isSystemAccount) {
+        this.isSystemAccount = isSystemAccount;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public void updateBalance(BigDecimal amount) {
+        this.currentBalance = this.currentBalance.add(amount);
+    }
+
+    public boolean isDebitAccount() {
+        return "ASSET".equals(this.accountType) || "EXPENSE".equals(this.accountType);
+    }
+
+    public boolean isCreditAccount() {
+        return "LIABILITY".equals(this.accountType) || "EQUITY".equals(this.accountType) 
+            || "INCOME".equals(this.accountType);
+    }
+
+    public BigDecimal getBalance() {
+        return isDebitAccount() ? currentBalance : currentBalance.negate();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s", accountCode, accountName);
     }
 } 
