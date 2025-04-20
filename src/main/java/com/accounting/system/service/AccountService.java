@@ -13,5 +13,11 @@ public interface AccountService {
     List<Account> getAllAccounts();
     List<Account> getActiveAccounts();
     List<Account> searchAccounts(String keyword);
-
+    List<Account> getAccountsByType(String type);
+    void updateBalance(Long accountId, double amount);
+    List<Account> getAccountTree();
+    Account getAccountByCode(String code);
+    Account saveAccount(Account account);
+    List<Account> getRecentAccounts();
+    void addRecentAccount(Account account);
 } 
