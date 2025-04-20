@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="com.accounting.system.controller.VoucherEntryController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Header Section -->
+    <GridPane hgap="10" vgap="10">
+        <Label text="凭证号：" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="voucherNoField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        
+        <Label text="日期：" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <DatePicker fx:id="datePicker" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        
+        <Label text="描述：" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="3"/>
+    </GridPane>
+
+    <!-- Entries Table -->
+    <TableView fx:id="entriesTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="accountCodeColumn" text="科目代码" prefWidth="100"/>
+            <TableColumn fx:id="accountNameColumn" text="科目名称" prefWidth="150"/>
+            <TableColumn fx:id="descriptionColumn" text="摘要" prefWidth="200"/>
+            <TableColumn fx:id="debitColumn" text="借方金额" prefWidth="120"/>
+            <TableColumn fx:id="creditColumn" text="贷方金额" prefWidth="120"/>
+            <TableColumn fx:id="actionColumn" text="操作" prefWidth="80"/>
+        </columns>
+    </TableView>
+
+    <!-- Entry Form -->
+    <GridPane hgap="10" vgap="5">
+        <ComboBox fx:id="accountComboBox" promptText="选择科目" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="entryDescriptionField" promptText="摘要" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <TextField fx:id="debitField" promptText="借方金额" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <TextField fx:id="creditField" promptText="贷方金额" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        <Button text="添加分录" onAction="#handleAddEntry" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+    </GridPane>
+
+    <!-- Totals Section -->
+    <HBox spacing="20" alignment="CENTER_RIGHT">
+        <Label text="合计："/>
+        <Label text="借方："/>
+        <Label fx:id="totalDebitLabel" text="0.00"/>
+        <Label text="贷方："/>
+        <Label fx:id="totalCreditLabel" text="0.00"/>
+    </HBox>
+
+    <!-- Buttons Section -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="保存" onAction="#handleSave" styleClass="button-primary"/>
+        <Button text="清空" onAction="#handleClear" styleClass="button-secondary"/>
+        <Button text="关闭" onAction="#handleClose" styleClass="button-secondary"/>
+    </HBox>
+</VBox> 
