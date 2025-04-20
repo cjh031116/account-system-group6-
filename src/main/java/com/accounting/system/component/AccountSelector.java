@@ -95,4 +95,93 @@ public class AccountSelector extends VBox {
         accountTree.setRoot(root);
     }
 
+    private TreeItem<Account> buildAccountTree(List<Account> accounts) {
+        TreeItem<Account> root = new TreeItem<>();
+
+        // First pass: create all nodes
+        for (Account account : accounts) {
+            TreeItem<Account> item = new TreeItem<>(account);
+            if (account.getParentAccountCode() == null) {
+                root.getChildren().add(item);
+            }
+        }
+
+        // Second pass: establish parent-child relationships
+        for (Account account : accounts) {
+            if (account.getParentAccountCode() != null) {
+                TreeItem<Account> parentItem = findTreeItem(root, account.getParentAccountCode());
+                if (parentItem != null) {
+                    parentItem.getChildren().add(new TreeItem<>(account));
+                }
+            }
+        }
+
+        return root;
+    }
+
+    private TreeItem<Account> findTreeItem(TreeItem<Account> root, String accountCode) {
+        if (root.getValue() != null && accountCode.equals(root.getValue().getAccountCode())) {
+            return root;
+        }
+
+        for (TreeItem<Account> child : root.getChildren()) {
+            TreeItem<Account> result = findTreeItem(child, accountCode);
+            if (result != null) {
+                return result;
+            }
+        }
+
+        return null;
+    }
+
+    private void filterAccounts(String searchText) {
+        if (searchText == null || searchText.isEmpty()) {
+            loadAccounts();
+            return;
+        }
+
+        List<Account> allAccounts = accountService.getAllAccounts();
+        List<Account> filteredAccounts = new ArrayList<>();
+
+        for (Account account : allAccounts) {
+            if (account.getAccountCode().contains(searchText) ||
+                account.getAccountName().contains(searchText)) {
+                filteredAccounts.add(account);
+            }
+        }
+
+        TreeItem<Account> filteredRoot = new TreeItem<>();
+        for (Account account : filteredAccounts) {
+            filteredRoot.getChildren().add(new TreeItem<>(account));
+        }
+
+        accountTree.setRoot(filteredRoot);
+    }
+
+    private void loadRecentAccounts() {
+        List<Account> recent = accountService.getRecentAccounts();
+        recentAccountsList.setAll(recent);
+    }
+
+    private void addToRecentAccounts(Account account) {
+        if (!recentAccountsList.contains(account)) {
+            recentAccountsList.add(0, account);
+            if (recentAccountsList.size() > 5) {
+                recentAccountsList.remove(5, recentAccountsList.size());
+            }
+            accountService.addRecentAccount(account);
+        }
+    }
+
+    public Account getSelectedAccount() {
+        return selectedAccount.get();
+    }
+
+    public ObjectProperty<Account> selectedAccountProperty() {
+        return selectedAccount;
+    }
+
+    public void setSelectedAccount(Account account) {
+        selectedAccount.set(account);
+    }
 } 
