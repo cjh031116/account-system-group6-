@@ -1,54 +1,166 @@
-.root {
-  -fx-background-color: #f5f5f5;
+/* 菜单条样式 */
+.menu-bar {
+  -fx-background-color: #2c3e50; /* 深蓝色调 */
 }
 
-.label {
-  -fx-font-size: 14px;
+.menu {
+  -fx-padding: 5px 10px;
 }
 
-.text-field,
-.password-field {
-  -fx-pref-width: 200px;
-  -fx-padding: 8px;
-  -fx-background-radius: 4px;
-  -fx-border-radius: 4px;
-  -fx-border-color: #cccccc;
+.menu .label {
+  -fx-text-fill: #ecf0f1; /* 浅灰色文字 */
 }
 
-.text-field:focused,
-.password-field:focused {
-  -fx-border-color: #2196f3;
-  -fx-border-width: 2px;
+.menu:hover {
+  -fx-background-color: #34495e; /* 鼠标悬停时颜色变深 */
 }
 
-.button {
-  -fx-pref-width: 100px;
-  -fx-padding: 8px;
-  -fx-background-radius: 4px;
-  -fx-border-radius: 4px;
-  -fx-font-size: 14px;
-  -fx-cursor: hand;
+.menu:showing {
+  -fx-background-color: #34495e; /* 菜单展开时颜色 */
 }
 
-.button:hover {
-  -fx-opacity: 0.8;
+.menu-item {
+  -fx-padding: 5px 10px;
 }
 
-#loginButton {
-  -fx-background-color: #2196f3;
-  -fx-text-fill: white;
+.menu-item .label {
+  -fx-text-fill: #2c3e50; /* 菜单项文字颜色 */
 }
 
-#cancelButton {
-  -fx-background-color: #f44336;
-  -fx-text-fill: white;
+.menu-item:hover {
+  -fx-background-color: #bdc3c7; /* 菜单项鼠标悬停颜色 */
 }
 
-.check-box {
-  -fx-font-size: 14px;
+/* 侧边栏样式 */
+.sidebar {
+  -fx-background-color: #34495e; /* 深蓝色调 */
 }
 
-.error-label {
-  -fx-text-fill: #f44336;
-  -fx-font-size: 12px;
+.sidebar .button {
+  -fx-background-color: #2c3e50;
+  -fx-text-fill: #ecf0f1;
+  -fx-padding: 15px 10px;
+  -fx-border-radius: 0;
+  -fx-background-radius: 0;
+  -fx-alignment: CENTER_LEFT;
+}
+
+.sidebar .button:hover {
+  -fx-background-color: #3498db; /* 鼠标悬停颜色 */
+}
+
+.sidebar .button:pressed {
+  -fx-background-color: #2980b9; /* 鼠标点击颜色 */
+}
+
+/* 默认选中左侧第一个菜单 */
+.sidebar .button:first-child {
+  -fx-background-color: #3498db; /* 选中状态颜色 */
+}
+
+/* 工具栏按钮样式 */
+/* Add 按钮 */
+.tool-bar .button.add {
+  -fx-background-color: #27ae60; /* 绿色调 */
+  -fx-text-fill: #ecf0f1;
+  -fx-padding: 8px 15px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+}
+
+.tool-bar .button.add:hover {
+  -fx-background-color: #2ecc71; /* 鼠标悬停颜色 */
+}
+
+.tool-bar .button.add:pressed {
+  -fx-background-color: #27ae60; /* 鼠标点击颜色 */
+}
+
+/* Edit 按钮 */
+.tool-bar .button.edit {
+  -fx-background-color: #f39c12; /* 橙色调 */
+  -fx-text-fill: #ecf0f1;
+  -fx-padding: 8px 15px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+}
+
+.tool-bar .button.edit:hover {
+  -fx-background-color: #f1c40f; /* 鼠标悬停颜色 */
+}
+
+.tool-bar .button.edit:pressed {
+  -fx-background-color: #f39c12; /* 鼠标点击颜色 */
+}
+
+/* Delete 按钮 */
+.tool-bar .button.delete {
+  -fx-background-color: #c0392b; /* 红色调 */
+  -fx-text-fill: #ecf0f1;
+  -fx-padding: 8px 15px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+}
+
+.tool-bar .button.delete:hover {
+  -fx-background-color: #e74c3c; /* 鼠标悬停颜色 */
+}
+
+.tool-bar .button.delete:pressed {
+  -fx-background-color: #c0392b; /* 鼠标点击颜色 */
+}
+
+/* Verify 按钮 */
+.tool-bar .button.verify {
+  -fx-background-color: #3498db; /* 蓝色调 */
+  -fx-text-fill: #ecf0f1;
+  -fx-padding: 8px 15px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+}
+
+.tool-bar .button.verify:hover {
+  -fx-background-color: #2980b9; /* 鼠标悬停颜色 */
+}
+
+.tool-bar .button.verify:pressed {
+  -fx-background-color: #3498db; /* 鼠标点击颜色 */
+}
+
+/* 表格样式 */
+.table-view {
+  -fx-background-color: #ecf0f1; /* 浅灰色背景 */
+  -fx-border-color: #bdc3c7;
+  -fx-border-width: 1px;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #2c3e50; /* 表头背景颜色 */
+}
+
+.table-view .column-header {
+  -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+  -fx-text-fill: #ecf0f1; /* 表头文字颜色 */
+  -fx-padding: 10px 0;
+}
+
+.table-row-cell {
+  -fx-background-color: #f9f9f9; /* 表格行背景颜色 */
+}
+
+.table-row-cell:odd {
+  -fx-background-color: #f4f4f4; /* 奇数行背景颜色 */
+}
+
+.table-row-cell:selected {
+  -fx-background-color: #3498db; /* 选中行背景颜色 */
+}
+
+.table-cell {
+  -fx-padding: 5px;
+  -fx-border-color: #bdc3c7;
+  -fx-border-width: 0 1px 1px 0;
 }
