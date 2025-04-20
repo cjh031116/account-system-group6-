@@ -65,4 +65,81 @@ public class DateRangeSelector extends VBox {
         updateDatesFromPreset("Current Month");
     }
 
+    private void setupListeners() {
+        // Update properties when date pickers change
+        startDatePicker.valueProperty().addListener((obs, old, newVal) -> {
+            if (newVal != null) {
+                startDate.set(newVal);
+                if (endDatePicker.getValue() != null &&
+                    newVal.isAfter(endDatePicker.getValue())) {
+                    endDatePicker.setValue(newVal);
+                }
+                presetPeriods.setValue("Custom");
+            }
+        });
+
+        endDatePicker.valueProperty().addListener((obs, old, newVal) -> {
+            if (newVal != null) {
+                endDate.set(newVal);
+                if (startDatePicker.getValue() != null &&
+                    newVal.isBefore(startDatePicker.getValue())) {
+                    startDatePicker.setValue(newVal);
+                }
+                presetPeriods.setValue("Custom");
+            }
+        });
+
+        // Handle preset period selection
+        presetPeriods.valueProperty().addListener((obs, old, newVal) -> {
+            if (newVal != null && !newVal.equals("Custom")) {
+                updateDatesFromPreset(newVal);
+            }
+        });
+    }
+
+    private void updateDatesFromPreset(String preset) {
+        LocalDate now = LocalDate.now();
+
+        switch (preset) {
+            case "Current Month":
+                startDatePicker.setValue(now.withDayOfMonth(1));
+                endDatePicker.setValue(now.with(TemporalAdjusters.lastDayOfMonth()));
+                break;
+
+            case "Last Month":
+                LocalDate firstDayOfLastMonth = now.minusMonths(1).withDayOfMonth(1);
+                startDatePicker.setValue(firstDayOfLastMonth);
+                endDatePicker.setValue(firstDayOfLastMonth.with(TemporalAdjusters.lastDayOfMonth()));
+                break;
+
+            case "Current Quarter":
+                LocalDate firstDayOfQuarter = now.with(now.getMonth().firstMonthOfQuarter())
+                    .withDayOfMonth(1);
+                startDatePicker.setValue(firstDayOfQuarter);
+                endDatePicker.setValue(firstDayOfQuarter.plusMonths(2)
+                    .with(TemporalAdjusters.lastDayOfMonth()));
+                break;
+
+            case "Last Quarter":
+                LocalDate firstDayOfLastQuarter = now.minusMonths(3)
+                    .with(now.minusMonths(3).getMonth().firstMonthOfQuarter())
+                    .withDayOfMonth(1);
+                startDatePicker.setValue(firstDayOfLastQuarter);
+                endDatePicker.setValue(firstDayOfLastQuarter.plusMonths(2)
+                    .with(TemporalAdjusters.lastDayOfMonth()));
+                break;
+
+            case "Current Year":
+                startDatePicker.setValue(now.withDayOfYear(1));
+                endDatePicker.setValue(now.with(TemporalAdjusters.lastDayOfYear()));
+                break;
+
+            case "Last Year":
+                LocalDate lastYear = now.minusYears(1);
+                startDatePicker.setValue(lastYear.withDayOfYear(1));
+                endDatePicker.setValue(lastYear.with(TemporalAdjusters.lastDayOfYear()));
+                break;
+        }
+    }
+
 } 
