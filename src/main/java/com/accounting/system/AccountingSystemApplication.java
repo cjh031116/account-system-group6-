@@ -13,14 +13,14 @@ public class AccountingSystemApplication extends Application {
         // Load login interface
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
         Parent root = loader.load();
-        
+
         // Create scene with specific size
         Scene scene = new Scene(root, 500, 400);
         scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
-        
+
         // Center the window on screen
         primaryStage.centerOnScreen();
-        
+
         // Set window properties
         primaryStage.setTitle("Accounting System - Login");
         primaryStage.setScene(scene);
