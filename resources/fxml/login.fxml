@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="25" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="com.accounting.system.controller.LoginController"
+      style="-fx-background-color: #f5f5f5;">
+    
+    <padding><Insets top="40" right="60" bottom="40" left="60"/></padding>
+    
+    <Label text="Accounting System Login" style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+    
+    <GridPane vgap="20" hgap="15">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100"/>
+            <ColumnConstraints minWidth="200"/>
+        </columnConstraints>
+        
+        <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0" 
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1" 
+                  style="-fx-font-size: 14px;"/>
+        
+        <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0" 
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" 
+                      style="-fx-font-size: 14px;"/>
+        
+        <CheckBox fx:id="rememberMeCheckBox" text="Remember Me" GridPane.rowIndex="2" GridPane.columnIndex="1" 
+                  style="-fx-font-size: 14px;"/>
+        
+        <Label fx:id="errorLabel" textFill="RED" GridPane.rowIndex="3" GridPane.columnIndex="0" 
+               GridPane.columnSpan="2" style="-fx-font-size: 12px;"/>
+    </GridPane>
+    
+    <HBox spacing="20" alignment="CENTER">
+        <Button text="Login" onAction="#handleLogin" 
+                style="-fx-font-size: 14px; -fx-pref-width: 120px; -fx-background-color: #2196F3; -fx-text-fill: white;"/>
+        <Button text="Cancel" onAction="#handleCancel" 
+                style="-fx-font-size: 14px; -fx-pref-width: 120px; -fx-background-color: #e0e0e0;"/>
+    </HBox>
+</VBox> 
