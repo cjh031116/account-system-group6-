@@ -2,7 +2,6 @@ package com.accounting.system.common;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;

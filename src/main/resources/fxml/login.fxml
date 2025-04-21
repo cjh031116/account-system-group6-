@@ -28,7 +28,7 @@
         <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" 
                       style="-fx-font-size: 14px;"/>
         
-        <CheckBox fx:id="rememberMeCheckBox" text="Remember Me" GridPane.rowIndex="2" GridPane.columnIndex="1" 
+        <CheckBox fx:id="rememberMeCheckbox" text="Remember Me" GridPane.rowIndex="2" GridPane.columnIndex="1" 
                   style="-fx-font-size: 14px;"/>
         
         <Label fx:id="errorLabel" textFill="RED" GridPane.rowIndex="3" GridPane.columnIndex="0" 
@@ -36,7 +36,7 @@
     </GridPane>
     
     <HBox spacing="20" alignment="CENTER">
-        <Button text="Login" onAction="#handleLogin" 
+        <Button fx:id="loginButton" text="Login" onAction="#handleLogin" 
                 style="-fx-font-size: 14px; -fx-pref-width: 120px; -fx-background-color: #2196F3; -fx-text-fill: white;"/>
         <Button text="Cancel" onAction="#handleCancel" 
                 style="-fx-font-size: 14px; -fx-pref-width: 120px; -fx-background-color: #e0e0e0;"/>

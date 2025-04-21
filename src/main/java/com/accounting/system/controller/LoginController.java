@@ -1,6 +1,10 @@
 package com.accounting.system.controller;
 
+import com.accounting.system.common.Constants;
+import com.accounting.system.common.Utils;
 import com.accounting.system.model.User;
+import com.accounting.system.service.UserService;
+import com.accounting.system.service.impl.UserServiceImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,9 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 
 public class LoginController {
     @FXML
@@ -20,76 +21,104 @@ public class LoginController {
     private PasswordField passwordField;
     
     @FXML
-    private CheckBox rememberMeCheckBox;
+    private CheckBox rememberMeCheckbox;
+    
+    @FXML
+    private Button loginButton;
     
     @FXML
     private Label errorLabel;
 
+    private final UserService userService;
+
+    public LoginController() {
+        this.userService = new UserServiceImpl();
+    }
+
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
+
     @FXML
     private void initialize() {
-        // Clear error message on initialization
-        errorLabel.setText("");
+        setupValidation();
+        setupRememberMe();
+        
+        // Clear error label when input changes
+        usernameField.textProperty().addListener((obs, old, newVal) -> 
+            errorLabel.setText(""));
+        passwordField.textProperty().addListener((obs, old, newVal) -> 
+            errorLabel.setText(""));
+    }
+
+    private void setupValidation() {
+        loginButton.disableProperty().bind(
+            usernameField.textProperty().isEmpty()
+                .or(passwordField.textProperty().isEmpty())
+        );
+    }
+
+    private void setupRememberMe() {
+        String savedUsername = userService.getSavedUsername();
+        if (savedUsername != null && !savedUsername.isEmpty()) {
+            usernameField.setText(savedUsername);
+            rememberMeCheckbox.setSelected(true);
+        }
     }
 
     @FXML
     private void handleLogin() {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
-
-        // Validate input
-        if (username.isEmpty() || password.isEmpty()) {
-            errorLabel.setText("Username and password cannot be empty");
-            return;
-        }
-
-        // Validate user (using hardcoded credentials for now, should be replaced with database validation)
-        if (validateUser(username, password)) {
-            try {
-                // Load main interface
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
-                Parent root = loader.load();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        
+        try {
+            if (userService.authenticate(username, password)) {
+                if (rememberMeCheckbox.isSelected()) {
+                    userService.saveUsername(username);
+                } else {
+                    userService.clearSavedUsername();
+                }
                 
-                // Create new scene
-                Scene scene = new Scene(root);
-                scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
+                // Load main window
+                loadMainWindow(new User(username, password));
                 
-                // Get current window and set new scene
-                Stage stage = (Stage) usernameField.getScene().getWindow();
-                stage.setScene(scene);
-                stage.setTitle("Accounting System - Main");
-                stage.show();
-            } catch (IOException e) {
-                errorLabel.setText("Failed to load main interface: " + e.getMessage());
+                // Close login window
+                ((Stage) loginButton.getScene().getWindow()).close();
+            } else {
+                errorLabel.setText("Invalid username or password");
             }
-        } else {
-            errorLabel.setText("Invalid username or password");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            errorLabel.setText("Login failed: " + e.getMessage());
+        }
+    }
+
+    private void loadMainWindow(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
+            Parent root = loader.load();
+            
+            MainController mainController = loader.getController();
+            mainController.initData(user);
+            
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
+            
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setTitle(Constants.APP_TITLE + " - Main");
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Error loading main.fxml: " + e.getMessage());
+            e.printStackTrace();
+            Utils.showError("Error", "Failed to load main interface: " + e.getMessage());
         }
     }
 
     @FXML
     private void handleCancel() {
-        // Close login window
-        Stage stage = (Stage) usernameField.getScene().getWindow();
+        Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.close();
-    }
-
-    private boolean validateUser(String username, String password) {
-        // Using hardcoded credentials for now, should be replaced with database validation
-        String validUsername = "admin";
-        String validPasswordHash = hashPassword("admin123");
-
-        return username.equals(validUsername) && 
-               hashPassword(password).equals(validPasswordHash);
-    }
-
-    private String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(password.getBytes());
-            return Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return "";
-        }
     }
 } 

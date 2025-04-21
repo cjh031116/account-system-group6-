@@ -4,57 +4,77 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml" fx:controller="com.accounting.system.controller.VoucherEntryController">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-
-    <!-- Header Section -->
-    <GridPane hgap="10" vgap="10">
-        <Label text="凭证号：" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="voucherNoField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+<VBox spacing="10" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.accounting.system.controller.VoucherEntryController"
+      style="-fx-padding: 10;">
+    
+    <GridPane vgap="10" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100" halignment="RIGHT"/>
+            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="100" halignment="RIGHT"/>
+            <ColumnConstraints minWidth="200"/>
+        </columnConstraints>
         
-        <Label text="日期：" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-        <DatePicker fx:id="datePicker" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        <Label text="Voucher No:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="voucherNoField" editable="false" 
+                  GridPane.rowIndex="0" GridPane.columnIndex="1"/>
         
-        <Label text="描述：" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="3"/>
+        <Label text="Date:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        <DatePicker fx:id="datePicker" 
+                   GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+        
+        <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextArea fx:id="descriptionArea" prefRowCount="3" 
+                 GridPane.rowIndex="1" GridPane.columnIndex="1" 
+                 GridPane.columnSpan="3"/>
     </GridPane>
-
-    <!-- Entries Table -->
+    
     <TableView fx:id="entriesTable" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="accountCodeColumn" text="科目代码" prefWidth="100"/>
-            <TableColumn fx:id="accountNameColumn" text="科目名称" prefWidth="150"/>
-            <TableColumn fx:id="descriptionColumn" text="摘要" prefWidth="200"/>
-            <TableColumn fx:id="debitColumn" text="借方金额" prefWidth="120"/>
-            <TableColumn fx:id="creditColumn" text="贷方金额" prefWidth="120"/>
-            <TableColumn fx:id="actionColumn" text="操作" prefWidth="80"/>
+            <TableColumn fx:id="accountColumn" text="Account" prefWidth="300"/>
+            <TableColumn fx:id="debitColumn" text="Debit" prefWidth="100"/>
+            <TableColumn fx:id="creditColumn" text="Credit" prefWidth="100"/>
         </columns>
     </TableView>
-
-    <!-- Entry Form -->
-    <GridPane hgap="10" vgap="5">
-        <ComboBox fx:id="accountComboBox" promptText="选择科目" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="entryDescriptionField" promptText="摘要" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <TextField fx:id="debitField" promptText="借方金额" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-        <TextField fx:id="creditField" promptText="贷方金额" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-        <Button text="添加分录" onAction="#handleAddEntry" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+    
+    <GridPane vgap="10" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="100"/>
+            <ColumnConstraints minWidth="100"/>
+            <ColumnConstraints minWidth="100"/>
+        </columnConstraints>
+        
+        <ComboBox fx:id="accountComboBox" promptText="Select Account" 
+                 GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="debitField" promptText="Debit" 
+                  GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <TextField fx:id="creditField" promptText="Credit" 
+                  GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+        <Button fx:id="addEntryButton" text="Add Entry" 
+                GridPane.rowIndex="0" GridPane.columnIndex="3"/>
     </GridPane>
-
-    <!-- Totals Section -->
-    <HBox spacing="20" alignment="CENTER_RIGHT">
-        <Label text="合计："/>
-        <Label text="借方："/>
-        <Label fx:id="totalDebitLabel" text="0.00"/>
-        <Label text="贷方："/>
-        <Label fx:id="totalCreditLabel" text="0.00"/>
-    </HBox>
-
-    <!-- Buttons Section -->
+    
     <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="保存" onAction="#handleSave" styleClass="button-primary"/>
-        <Button text="清空" onAction="#handleClear" styleClass="button-secondary"/>
-        <Button text="关闭" onAction="#handleClose" styleClass="button-secondary"/>
+        <Label text="Total Debit:" style="-fx-font-weight: bold;"/>
+        <Label fx:id="totalDebitLabel" text="0.00" 
+               style="-fx-font-weight: bold; -fx-min-width: 100;"/>
+        <Label text="Total Credit:" style="-fx-font-weight: bold;"/>
+        <Label fx:id="totalCreditLabel" text="0.00" 
+               style="-fx-font-weight: bold; -fx-min-width: 100;"/>
+        <Label text="Balance:" style="-fx-font-weight: bold;"/>
+        <Label fx:id="balanceLabel" text="0.00" 
+               style="-fx-font-weight: bold; -fx-min-width: 100;"/>
+    </HBox>
+    
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="removeEntryButton" text="Remove Entry" 
+                style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+        <Button fx:id="cancelButton" text="Cancel" 
+                style="-fx-background-color: #9e9e9e; -fx-text-fill: white;"/>
+        <Button fx:id="saveButton" text="Save" 
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
     </HBox>
 </VBox> 

@@ -7,25 +7,15 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.accounting.system.controller.MainController"
-            prefWidth="1024" prefHeight="768">
+            style="-fx-background-color: #f5f5f5;">
     
     <top>
-        <MenuBar>
-            <Menu text="File">
-                <MenuItem text="New"/>
-                <MenuItem text="Open"/>
-                <MenuItem text="Save"/>
-                <SeparatorMenuItem/>
-                <MenuItem text="Exit"/>
-            </Menu>
-            <Menu text="Edit">
-                <MenuItem text="Undo"/>
-                <MenuItem text="Redo"/>
-            </Menu>
-            <Menu text="Help">
-                <MenuItem text="About"/>
-            </Menu>
-        </MenuBar>
+        <HBox spacing="10" style="-fx-background-color: #2f4050; -fx-padding: 10;">
+            <Label text="Accounting System" style="-fx-text-fill: white; -fx-font-size: 20px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="logoutButton" text="Logout" 
+                    style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+        </HBox>
     </top>
     
     <left>
@@ -64,50 +54,35 @@
     </left>
     
     <center>
-        <VBox>
-            <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-                <tabs>
-                    <Tab text="Voucher List">
-                        <content>
-                            <VBox spacing="10" style="-fx-padding: 10;">
-                                <HBox spacing="5" style="-fx-padding: 0 0 10 0;">
-                                    <Button text="Add" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
-                                        <HBox.margin>
-                                            <Insets right="5"/>
-                                        </HBox.margin>
-                                    </Button>
-                                    <Button text="Edit" style="-fx-background-color: #f0ad4e; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
-                                        <HBox.margin>
-                                            <Insets right="5"/>
-                                        </HBox.margin>
-                                    </Button>
-                                    <Button text="Delete" style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
-                                        <HBox.margin>
-                                            <Insets right="5"/>
-                                        </HBox.margin>
-                                    </Button>
-                                    <Button text="Verify" style="-fx-background-color: #5bc0de; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;"/>
-                                </HBox>
-                                
-                                <TableView VBox.vgrow="ALWAYS" fx:id="voucherTable">
-                                    <columns>
-                                        <TableColumn text="Voucher No." prefWidth="150"/>
-                                        <TableColumn text="Date" prefWidth="150"/>
-                                        <TableColumn text="Description" prefWidth="200"/>
-                                        <TableColumn text="Debit Amount" prefWidth="150"/>
-                                        <TableColumn text="Credit Amount" prefWidth="150"/>
-                                        <TableColumn text="Status" prefWidth="100"/>
-                                    </columns>
-                                    <placeholder>
-                                        <Label text="No content in the table."/>
-                                    </placeholder>
-                                </TableView>
-                            </VBox>
-                        </content>
-                    </Tab>
-                    <Tab text="General Ledger"/>
-                </tabs>
-            </TabPane>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Search:" style="-fx-font-size: 14px;"/>
+                <TextField fx:id="searchField" promptText="Search vouchers..." 
+                          style="-fx-pref-width: 200px;"/>
+                <Label text="Date Range:" style="-fx-font-size: 14px;"/>
+                <DatePicker fx:id="startDatePicker" promptText="Start Date"/>
+                <DatePicker fx:id="endDatePicker" promptText="End Date"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="addButton" text="Add" 
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button fx:id="editButton" text="Edit" 
+                        style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                <Button fx:id="deleteButton" text="Delete" 
+                        style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+                <Button fx:id="verifyButton" text="Verify" 
+                        style="-fx-background-color: #FFC107; -fx-text-fill: black;"/>
+            </HBox>
+            
+            <TableView fx:id="voucherTable" style="-fx-background-color: white;">
+                <columns>
+                    <TableColumn fx:id="voucherNoColumn" text="Voucher No" prefWidth="100"/>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
+                    <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300"/>
+                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="100"/>
+                </columns>
+            </TableView>
+            
+            <Pagination fx:id="pagination" style="-fx-background-color: white;"/>
         </VBox>
     </center>
 </BorderPane> 
