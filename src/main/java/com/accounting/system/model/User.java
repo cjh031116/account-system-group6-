@@ -11,6 +11,7 @@ public class User {
     private boolean active;
     private LocalDateTime lastLogin;
     private boolean rememberMe;
+    private Integer userType;
 
     public User() {}
 
