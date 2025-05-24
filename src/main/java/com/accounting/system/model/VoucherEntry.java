@@ -4,18 +4,31 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+
 import java.time.LocalDate;
 
+/**
+ * Represents a single entry in a voucher.
+ * Each entry records a debit or credit transaction for a specific account.
+ */
 public class VoucherEntry {
-    private final SimpleLongProperty id;
-    private final SimpleLongProperty voucherId;
-    private final SimpleObjectProperty<Account> account;
-    private final SimpleDoubleProperty debit;
-    private final SimpleDoubleProperty credit;
-    private final SimpleStringProperty description;
-    private final SimpleObjectProperty<LocalDate> date;
-    private final SimpleStringProperty voucherNo;
+    // Identification properties
+    private final SimpleLongProperty id; // Unique identifier for the entry
+    private final SimpleLongProperty voucherId; // ID of the parent voucher
+    private final SimpleStringProperty voucherNo; // Voucher number for reference
+    
+    // Transaction details
+    private final SimpleObjectProperty<Account> account; // Account affected by this entry
+    private final SimpleDoubleProperty debit; // Debit amount (positive)
+    private final SimpleDoubleProperty credit; // Credit amount (positive)
+    private final SimpleStringProperty description; // Description of the transaction
+    
+    // Date information
+    private final SimpleObjectProperty<LocalDate> date; // Date of the transaction
 
+    /**
+     * Default constructor initializes all properties with default values.
+     */
     public VoucherEntry() {
         this.id = new SimpleLongProperty();
         this.voucherId = new SimpleLongProperty();
@@ -27,6 +40,15 @@ public class VoucherEntry {
         this.voucherNo = new SimpleStringProperty();
     }
 
+    /**
+     * Constructor with parameters to initialize a voucher entry with specific values.
+     * @param id Unique identifier for the entry
+     * @param voucherId ID of the parent voucher
+     * @param account Account affected by this entry
+     * @param debit Debit amount
+     * @param credit Credit amount
+     * @param description Description of the transaction
+     */
     public VoucherEntry(Long id, Long voucherId, Account account, double debit, double credit, String description) {
         this();
         setId(id);
@@ -37,7 +59,7 @@ public class VoucherEntry {
         setDescription(description);
     }
 
-    // Getters and Setters
+    // Getters and Setters with property support for JavaFX binding
     public Long getId() {
         return id.get();
     }
@@ -134,6 +156,11 @@ public class VoucherEntry {
         return voucherNo;
     }
 
+    /**
+     * Returns a string representation of the voucher entry.
+     * Format: "Account - Debit: X.XX, Credit: Y.YY"
+     * @return Formatted string representation of the entry
+     */
     @Override
     public String toString() {
         return String.format("%s - Debit: %.2f, Credit: %.2f", 
@@ -141,6 +168,11 @@ public class VoucherEntry {
             getDebit(), getCredit());
     }
 
+    /**
+     * Compares this voucher entry with another object for equality based on ID.
+     * @param o Object to compare with
+     * @return true if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -149,6 +181,10 @@ public class VoucherEntry {
         return id.get() == that.id.get();
     }
 
+    /**
+     * Returns a hash code value for this voucher entry based on its ID.
+     * @return Hash code value
+     */
     @Override
     public int hashCode() {
         return Long.hashCode(id.get());

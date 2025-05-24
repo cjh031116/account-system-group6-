@@ -1,64 +1,109 @@
 package com.accounting.system.model;
 
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.time.LocalDateTime;
 
+/**
+ * Represents a user in the accounting system.
+ * Contains user authentication and profile information.
+ */
 public class User {
-    private Long id;
-    private String username;
-    private String passwordHash;
-    private String email;
-    private String role;
-    private boolean active;
-    private LocalDateTime lastLogin;
-    private boolean rememberMe;
+    // User identification
+    private final SimpleLongProperty id; // Unique identifier for the user
+    private final SimpleStringProperty username; // User's login name
+    private final SimpleStringProperty password; // Hashed password
+    private final SimpleStringProperty email; // User's email address
+    private final SimpleStringProperty role; // User's role (e.g., ADMIN, USER)
+    
+    // User status and preferences
+    private boolean active; // Whether the user account is active
+    private LocalDateTime lastLogin; // Timestamp of last successful login
+    private boolean rememberMe; // Whether to remember user credentials
 
-    public User() {}
-
-    public User(String username, String passwordHash) {
-        this.username = username;
-        this.passwordHash = passwordHash;
-        this.active = true;
+    /**
+     * Default constructor initializes all properties with default values.
+     */
+    public User() {
+        this.id = new SimpleLongProperty();
+        this.username = new SimpleStringProperty();
+        this.password = new SimpleStringProperty();
+        this.email = new SimpleStringProperty();
+        this.role = new SimpleStringProperty();
     }
 
-    // Getters and Setters
+    /**
+     * Constructor with parameters to initialize a user with basic credentials.
+     * @param username User's login name
+     * @param password User's password (will be hashed)
+     */
+    public User(String username, String password) {
+        this();
+        setUsername(username);
+        setPassword(password);
+        setRole("USER");
+    }
+
+    // Getters and Setters with property support for JavaFX binding
     public Long getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id.set(id);
+    }
+
+    public SimpleLongProperty idProperty() {
+        return id;
     }
 
     public String getUsername() {
-        return username;
+        return username.get();
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username.set(username);
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public SimpleStringProperty usernameProperty() {
+        return username;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public String getPassword() {
+        return password.get();
+    }
+
+    public void setPassword(String password) {
+        this.password.set(password);
+    }
+
+    public SimpleStringProperty passwordProperty() {
+        return password;
     }
 
     public String getEmail() {
-        return email;
+        return email.get();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
+    }
+
+    public SimpleStringProperty emailProperty() {
+        return email;
     }
 
     public String getRole() {
-        return role;
+        return role.get();
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.role.set(role);
+    }
+
+    public SimpleStringProperty roleProperty() {
+        return role;
     }
 
     public boolean isActive() {
