@@ -5,8 +5,10 @@ import com.accounting.system.model.Account;
 import com.accounting.system.model.Voucher;
 import com.accounting.system.model.VoucherEntry;
 import com.accounting.system.service.AccountService;
+import com.accounting.system.service.AiService;
 import com.accounting.system.service.VoucherService;
 import com.accounting.system.service.impl.AccountServiceImpl;
+import com.accounting.system.service.impl.AiServiceImpl;
 import com.accounting.system.service.impl.VoucherServiceImpl;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +34,10 @@ public class VoucherEntryController {
     private DatePicker datePicker; // Date picker for voucher date
     @FXML
     private TextArea descriptionArea; // Text area for voucher description
+    @FXML
+    private TextArea categoryArea;
+    @FXML
+    private ChoiceBox<String> directionChoice;
     @FXML
     private TableView<VoucherEntry> entriesTable; // Table to display voucher entries
     @FXML
@@ -67,6 +74,7 @@ public class VoucherEntryController {
     private final ObservableList<VoucherEntry> entries; // List of voucher entries
     private final SimpleDoubleProperty totalDebit; // Property for total debit amount
     private final SimpleDoubleProperty totalCredit; // Property for total credit amount
+    private final AiService aiService;
 
     /**
      * Constructor initializes the controller with default values and services.
@@ -77,6 +85,7 @@ public class VoucherEntryController {
         this.totalCredit = new SimpleDoubleProperty(0);
         this.voucherService = new VoucherServiceImpl();
         this.accountService = new AccountServiceImpl();
+        this.aiService = new AiServiceImpl();
     }
 
     /**
@@ -117,6 +126,10 @@ public class VoucherEntryController {
         setupControls();
         setupTable();
         setupBindings();
+        ObservableList<String> directions = FXCollections.observableArrayList(
+            "Income", "Expense"
+        );
+        directionChoice.setItems(directions);
     }
 
     /**
@@ -214,9 +227,16 @@ public class VoucherEntryController {
         voucherNoField.setText(voucher.getVoucherNo());
         datePicker.setValue(voucher.getDate());
         descriptionArea.setText(voucher.getDescription());
+        categoryArea.setText(voucher.getCategory());
+        ObservableList<String> directions = FXCollections.observableArrayList(
+            "Income", "Expense"
+        );
+        directionChoice.setItems(directions);
+        directionChoice.getSelectionModel().select("Expense".equals(voucher.getDirection()) ? 1 : 0);
         
         entries.setAll(voucher.getEntries());
-        updateTotals();
+        totalDebit.set(voucher.getTotalDebit());
+        totalCredit.set(voucher.getTotalCredit());
     }
 
     /**
@@ -226,6 +246,12 @@ public class VoucherEntryController {
         voucherNoField.setText(voucherService.generateVoucherNumber());
         datePicker.setValue(LocalDate.now());
         descriptionArea.clear();
+        categoryArea.clear();
+        ObservableList<String> directions = FXCollections.observableArrayList(
+            "Income", "Expense"
+        );
+        directionChoice.setItems(directions);
+        directionChoice.getSelectionModel().select(0);
         entries.clear();
     }
 
@@ -301,6 +327,12 @@ public class VoucherEntryController {
             return;
         }
 
+        String desc = descriptionArea.getText();
+        if (desc == null || desc.isBlank()) {
+            Utils.showError("Error", "Please put description");
+            return;
+        }
+
         try {
             // Create new voucher if needed
             if (voucher == null) {
@@ -309,7 +341,15 @@ public class VoucherEntryController {
 
             // Set voucher properties
             voucher.setDate(datePicker.getValue());
-            voucher.setDescription(descriptionArea.getText());
+            voucher.setMonth(voucher.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM")));
+            voucher.setDescription(desc);
+            voucher.setDirection(directionChoice.getValue());
+            String category = categoryArea.getText();
+            if (category != null && !category.isBlank()) {
+                voucher.setCategory(category);
+            } else {
+                voucher.setCategory(aiService.category(desc));
+            }
             voucher.setEntries(new ArrayList<>(entries));
             voucher.setTotalDebit(totalDebit.get());
             voucher.setTotalCredit(totalCredit.get());
