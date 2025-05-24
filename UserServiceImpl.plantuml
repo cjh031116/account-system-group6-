@@ -1,0 +1,406 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Account {
+  - code: SimpleStringProperty
+  - parentId: SimpleLongProperty
+  - description: String
+  - active: SimpleBooleanProperty
+  - balance: SimpleDoubleProperty
+  - type: SimpleStringProperty
+  - id: SimpleLongProperty
+  - name: SimpleStringProperty
+   balance: double
+   name: String
+   description: String
+   active: boolean
+   type: String
+   id: Long
+   code: String
+   parentId: Long
+  + toString(): String
+  + activeProperty(): SimpleBooleanProperty
+  + idProperty(): SimpleLongProperty
+  + parentIdProperty(): SimpleLongProperty
+  + nameProperty(): SimpleStringProperty
+  + typeProperty(): SimpleStringProperty
+  + codeProperty(): SimpleStringProperty
+  + balanceProperty(): SimpleDoubleProperty
+  + Account(): 
+  + Account(Long, String, String, String, boolean, Long): 
+}
+class AccountSelector {
+   selectedAccount: Account
+  - loadAccounts(): void
+  - setupConverter(): void
+  + refresh(): void
+  + AccountSelector(AccountService): 
+}
+interface AccountService << interface >> {
+   allAccounts: List<Account>
+   activeAccounts: List<Account>
+  + getAccountById(Long): Account
+  + getAccountByCode(String): Account
+  + getChildAccounts(Long): List<Account>
+  + updateAccount(Account): Account
+  + createAccount(Account): Account
+  + searchAccounts(String): List<Account>
+  + deleteAccount(Long): void
+  + isAccountCodeUnique(String, Long): boolean
+}
+class AccountServiceImpl {
+   allAccounts: List<Account>
+   activeAccounts: List<Account>
+  + getChildAccounts(Long): List<Account>
+  + updateAccount(Account): Account
+  + createAccount(Account): Account
+  + deleteAccount(Long): void
+  - initializeSampleAccounts(): void
+  + searchAccounts(String): List<Account>
+  + getAccountById(Long): Account
+  + getAccountByCode(String): Account
+  - addRecentAccount(Account): void
+  - createAccount(String, String, String, boolean, Long): Account
+  + isAccountCodeUnique(String, Long): boolean
+  + AccountServiceImpl(): 
+}
+class AccountServiceTest {
+  + testGetActiveAccounts(): void
+  + testGetAllAccounts(): void
+  + testGetAccountByCode(): void
+  + AccountServiceTest(): 
+}
+class AccountingSystemApplication {
+  + main(String[]): void
+  + start(Stage): void
+  + AccountingSystemApplication(): 
+}
+class AiController {
+  - voucherService: VoucherService
+  - aiService: AiService
+   voucherService: VoucherService
+   aiService: AiService
+  - closeWindow(): void
+  - initialize(): void
+  - handleCancel(): void
+  - handleQuery(): void
+  - handleClear(): void
+  + AiController(): 
+}
+interface AiService << interface >> {
+  + category(String): String
+  + suggestion(List<Voucher>): String
+  + query(String): String
+}
+class AiServiceImpl {
+  + query(String): String
+  + suggestion(List<Voucher>): String
+  + category(String): String
+  + AiServiceImpl(): 
+}
+class Constants {
+  + Constants(): 
+}
+class DateRangeSelector {
+  - startDate: ObjectProperty<LocalDate>
+  - endDate: ObjectProperty<LocalDate>
+   endDate: LocalDate
+   startDate: LocalDate
+  - clear(): void
+  + startDateProperty(): ObjectProperty<LocalDate>
+  - setupListeners(): void
+  + endDateProperty(): ObjectProperty<LocalDate>
+  - updateDatesFromPreset(String): void
+  + DateRangeSelector(): 
+}
+class LedgerController {
+  - setupTableColumns(): void
+  - handleExport(): void
+  - setupButtonActions(): void
+  + initialize(): void
+  - initializeAccountComboBox(): void
+  - setDefaultDates(): void
+  - handleSearch(): void
+  - updateSummaryLabels(double, double, double, double): void
+  + LedgerController(): 
+}
+class LoginController {
+  - handleLogin(): void
+  - navigateToMainScreen(User): void
+  - setupEventHandlers(): void
+  - loadSavedCredentials(): void
+  + initialize(): void
+  - saveCredentials(String, String): void
+  - handleCancel(): void
+  - clearSavedCredentials(): void
+  - showError(String): void
+  + LoginController(): 
+}
+class MainController {
+  - loadFinancialReports(): void
+  - handleEdit(): void
+  + initData(User): void
+  - setupWelcomeLabel(): void
+  - loadAiConsulting(): void
+  - setupButtonActions(): void
+  - handleMenuAction(ActionEvent): void
+  - showError(String): void
+  - handleLogout(): void
+  - loadVoucherEntry(): void
+  - loadVoucherList(): void
+  - showHelpDialog(): void
+  - showInfo(String, String): void
+  - handleVerify(): void
+  - handleAdd(): void
+  - setupLogoutButton(): void
+  - handleImport(): void
+  - uploadFileToServer(File): void
+  - loadVouchers(): void
+  - handleDelete(): void
+  - setupSearch(): void
+  - filterVouchers(): void
+  - initialize(): void
+  - setupTableColumns(): void
+  - loadLedger(): void
+  - showAboutDialog(): void
+  - setupNavigationButtons(): void
+  + MainController(): 
+}
+class ReportController {
+  - voucherService: VoucherService
+   voucherService: VoucherService
+  - loadPieChartData(List<Voucher>): void
+  - initialize(): void
+  - loadLineChartData(List<Voucher>): void
+  + ReportController(): 
+}
+class User {
+  - username: SimpleStringProperty
+  - password: SimpleStringProperty
+  - lastLogin: LocalDateTime
+  - role: SimpleStringProperty
+  - active: boolean
+  - email: SimpleStringProperty
+  - rememberMe: boolean
+  - id: SimpleLongProperty
+   password: String
+   active: boolean
+   id: Long
+   email: String
+   lastLogin: LocalDateTime
+   rememberMe: boolean
+   username: String
+   role: String
+  + idProperty(): SimpleLongProperty
+  + passwordProperty(): SimpleStringProperty
+  + emailProperty(): SimpleStringProperty
+  + roleProperty(): SimpleStringProperty
+  + usernameProperty(): SimpleStringProperty
+  + User(): 
+  + User(String, String): 
+}
+interface UserService << interface >> {
+   savedUsername: String
+   sessionToken: String
+   loggedIn: boolean
+   currentUser: String
+  + authenticate(String, String): User
+  + saveUsername(String): void
+  + clearSavedUsername(): void
+  + startSession(String): void
+  + endSession(): void
+}
+class UserServiceImpl {
+  - currentUser: String
+  - sessionToken: String
+   savedUsername: String
+   sessionToken: String
+   loggedIn: boolean
+   currentUser: String
+  - generateSessionToken(): String
+  + endSession(): void
+  + clearSavedUsername(): void
+  + authenticate(String, String): User
+  + startSession(String): void
+  + saveUsername(String): void
+  + UserServiceImpl(): 
+}
+class UserServiceTest {
+  + test(): void
+  + testSaveUsername(): void
+  + testGetCurrentUser(): void
+  + UserServiceTest(): 
+}
+class Utils {
+  + formatDate(LocalDate): String
+  + formatAmount(double): String
+  + showError(String, String): void
+  + isValidAmount(String): boolean
+  + hashPassword(String): String
+  + parseAmount(String): double
+  + showConfirmation(String, String): boolean
+  + isValidDate(String): boolean
+  + parseDate(String): LocalDate
+  + showInfo(String, String): void
+  - centerAlert(Alert): void
+  + Utils(): 
+}
+class Voucher {
+  - date: LocalDate
+  - status: String
+  - category: String
+  - month: String
+  - lastModifiedDate: LocalDate
+  - totalCredit: double
+  - verifiedBy: Long
+  - description: String
+  - createdBy: String
+  - createdDate: LocalDate
+  - lastModifiedBy: String
+  - entries: List<VoucherEntry>
+  - totalDebit: double
+  - id: String
+  - voucherNo: String
+  - direction: String
+  - createdAt: LocalDateTime
+  - verifiedDate: LocalDate
+   totalCredit: double
+   description: String
+   debitAmount: double
+   createdAt: LocalDateTime
+   totalDebit: double
+   creditAmount: double
+   date: LocalDate
+   direction: String
+   voucherNo: String
+   id: String
+   createdBy: String
+   verifiedDate: LocalDate
+   lastModifiedDate: LocalDate
+   lastModifiedBy: String
+   createdDate: LocalDate
+   status: String
+   month: String
+   entries: List<VoucherEntry>
+   category: String
+   verifiedBy: Long
+  + removeEntry(VoucherEntry): void
+  + addEntry(VoucherEntry): void
+  - recalculateTotals(): void
+  + Voucher(): 
+}
+class VoucherEntry {
+  - description: SimpleStringProperty
+  - date: SimpleObjectProperty<LocalDate>
+  - debit: SimpleDoubleProperty
+  - voucherNo: SimpleStringProperty
+  - credit: SimpleDoubleProperty
+  - account: SimpleObjectProperty<Account>
+  - voucherId: SimpleLongProperty
+  - id: SimpleLongProperty
+   description: String
+   id: Long
+   date: LocalDate
+   credit: double
+   account: Account
+   voucherId: Long
+   debit: double
+   voucherNo: String
+  + descriptionProperty(): SimpleStringProperty
+  + creditProperty(): SimpleDoubleProperty
+  + accountProperty(): SimpleObjectProperty<Account>
+  + voucherNoProperty(): SimpleStringProperty
+  + toString(): String
+  + dateProperty(): SimpleObjectProperty<LocalDate>
+  + equals(Object): boolean
+  + idProperty(): SimpleLongProperty
+  + debitProperty(): SimpleDoubleProperty
+  + hashCode(): int
+  + voucherIdProperty(): SimpleLongProperty
+  + VoucherEntry(): 
+  + VoucherEntry(Long, Long, Account, double, double, String): 
+}
+class VoucherEntryController {
+  - voucherService: VoucherService
+  - accountService: AccountService
+  - voucher: Voucher
+   voucherService: VoucherService
+   accountService: AccountService
+   voucher: Voucher
+  - handleCancel(): void
+  - initialize(): void
+  - loadVoucherData(): void
+  - handleRemoveEntry(): void
+  - setupTable(): void
+  - updateTotals(): void
+  - handleAddEntry(): void
+  - parseAmount(String): double
+  - closeWindow(): void
+  - setupBindings(): void
+  - setupControls(): void
+  - handleSave(): void
+  - setupNewVoucher(): void
+  + VoucherEntryController(): 
+}
+class VoucherListController {
+  - showSuccess(String): void
+  - handleSearch(): void
+  - handleEdit(Voucher): void
+  + initialize(): void
+  - setupButtonActions(): void
+  - handleDelete(): void
+  - setupTableColumns(): void
+  - updateStatusLabel(int): void
+  - showError(String): void
+  - handleNew(): void
+  - handleDelete(Voucher): void
+  - loadVouchers(): void
+  - setDefaultDates(): void
+  - handleExport(): void
+  + VoucherListController(): 
+}
+interface VoucherService << interface >> {
+   allVouchers: List<Voucher>
+  + exportVouchers(List<Voucher>, String): void
+  + isBalanced(Voucher): boolean
+  + updateVoucher(Voucher): void
+  + generateVoucherNumber(): String
+  + searchVouchers(String): List<Voucher>
+  + getVoucherById(String): Optional<Voucher>
+  + verifyVoucher(String, Long): void
+  + createVoucher(Voucher): Voucher
+  + searchVouchers(String, LocalDate, LocalDate): List<Voucher>
+  + deleteVoucher(String): void
+  + saveVoucher(Voucher): Voucher
+}
+class VoucherServiceImpl {
+   allVouchers: List<Voucher>
+  + createVoucher(Voucher): Voucher
+  + exportVouchers(List<Voucher>, String): void
+  + generateVoucherNumber(): String
+  + saveVoucher(Voucher): Voucher
+  + getVoucherById(String): Optional<Voucher>
+  - loadVouchers(): void
+  + deleteVoucher(String): void
+  - saveVouchers(): void
+  + searchVouchers(String, LocalDate, LocalDate): List<Voucher>
+  + verifyVoucher(String, Long): void
+  + isBalanced(Voucher): boolean
+  + searchVouchers(String): List<Voucher>
+  + updateVoucher(Voucher): void
+  + VoucherServiceImpl(): 
+}
+class VoucherServiceTest {
+  + testGetAllVouchers(): void
+  + testIsBalanced(): void
+  + VoucherServiceTest(): 
+}
+
+AccountServiceImpl           -[#008200,dashed]-^  AccountService              
+AiServiceImpl                -[#008200,dashed]-^  AiService                   
+UserServiceImpl              -[#008200,dashed]-^  UserService                 
+VoucherServiceImpl           -[#008200,dashed]-^  VoucherService              
+@enduml
