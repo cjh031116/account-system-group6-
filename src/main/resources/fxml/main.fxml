@@ -7,107 +7,135 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.accounting.system.controller.MainController"
-            prefWidth="1024" prefHeight="768">
-    
+            prefWidth="1380" prefHeight="768">
+
     <top>
-        <MenuBar>
-            <Menu text="File">
-                <MenuItem text="New"/>
-                <MenuItem text="Open"/>
-                <MenuItem text="Save"/>
-                <SeparatorMenuItem/>
-                <MenuItem text="Exit"/>
-            </Menu>
-            <Menu text="Edit">
-                <MenuItem text="Undo"/>
-                <MenuItem text="Redo"/>
-            </Menu>
-            <Menu text="Help">
-                <MenuItem text="About"/>
-            </Menu>
-        </MenuBar>
+        <VBox>
+            <MenuBar fx:id="menuBar">
+                <Menu fx:id="fileMenu" text="File">
+                    <MenuItem text="New Voucher" onAction="#handleMenuAction"/>
+                    <MenuItem text="Open" onAction="#handleMenuAction"/>
+                    <MenuItem text="Save" onAction="#handleMenuAction"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Exit" onAction="#handleMenuAction"/>
+                </Menu>
+                <Menu fx:id="editMenu" text="Edit">
+                    <MenuItem text="Undo" onAction="#handleMenuAction"/>
+                    <MenuItem text="Redo" onAction="#handleMenuAction"/>
+                </Menu>
+                <Menu fx:id="viewMenu" text="View">
+                    <MenuItem text="Refresh" onAction="#handleMenuAction"/>
+                </Menu>
+                <Menu fx:id="helpMenu" text="Help">
+                    <MenuItem text="About" onAction="#handleMenuAction"/>
+                </Menu>
+            </MenuBar>
+            <HBox spacing="10" style="-fx-padding: 10 20;-fx-background-color: #2f4050;" alignment="CENTER_RIGHT">
+                <Label fx:id="welcomeLabel" style="-fx-font-size: 14px;-fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
     </top>
-    
+
     <left>
         <VBox spacing="1" style="-fx-background-color: #2f4050;" prefWidth="200">
-            <Button text="Voucher Management" maxWidth="Infinity" 
-                    style="-fx-background-color: #3c8dbc; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">
-                <padding>
-                    <Insets left="20" right="20"/>
-                </padding>
-            </Button>
-            <Button text="Ledger Management" maxWidth="Infinity"
+<!--            <Button fx:id="voucherListButton" text="Voucher Management" maxWidth="Infinity"-->
+<!--                    style="-fx-background-color: #3c8dbc; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">-->
+<!--                <padding>-->
+<!--                    <Insets left="20" right="20"/>-->
+<!--                </padding>-->
+<!--            </Button>-->
+<!--            <Button fx:id="ledgerButton" text="Ledger Management" maxWidth="Infinity"-->
+<!--                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">-->
+<!--                <padding>-->
+<!--                    <Insets left="20" right="20"/>-->
+<!--                </padding>-->
+<!--            </Button>-->
+<!--            <Button fx:id="voucherEntryButton" text="Period-End Closing" maxWidth="Infinity"-->
+<!--                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">-->
+<!--                <padding>-->
+<!--                    <Insets left="20" right="20"/>-->
+<!--                </padding>-->
+<!--            </Button>-->
+            <Button fx:id="financialReportsButton" text="Financial Reports" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">
                 <padding>
                     <Insets left="20" right="20"/>
                 </padding>
             </Button>
-            <Button text="Period-End Closing" maxWidth="Infinity"
+            <Button fx:id="aiConsultingButton" text="AI Consulting" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">
                 <padding>
                     <Insets left="20" right="20"/>
                 </padding>
             </Button>
-            <Button text="Financial Reports" maxWidth="Infinity"
-                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">
-                <padding>
-                    <Insets left="20" right="20"/>
-                </padding>
-            </Button>
-            <Button text="Basic Settings" maxWidth="Infinity"
-                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">
+<!--            <Button fx:id="settingsButton" text="Basic Settings" maxWidth="Infinity"-->
+<!--                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">-->
+<!--                <padding>-->
+<!--                    <Insets left="20" right="20"/>-->
+<!--                </padding>-->
+<!--            </Button>-->
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="logoutButton" text="Logout" maxWidth="Infinity"
+                    style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-padding: 15; -fx-border-width: 0; -fx-font-size: 14px; -fx-alignment: CENTER_LEFT;">
                 <padding>
                     <Insets left="20" right="20"/>
                 </padding>
             </Button>
         </VBox>
     </left>
-    
+
     <center>
-        <VBox>
-            <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-                <tabs>
-                    <Tab text="Voucher List">
-                        <content>
-                            <VBox spacing="10" style="-fx-padding: 10;">
-                                <HBox spacing="5" style="-fx-padding: 0 0 10 0;">
-                                    <Button text="Add" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
-                                        <HBox.margin>
-                                            <Insets right="5"/>
-                                        </HBox.margin>
-                                    </Button>
-                                    <Button text="Edit" style="-fx-background-color: #f0ad4e; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
-                                        <HBox.margin>
-                                            <Insets right="5"/>
-                                        </HBox.margin>
-                                    </Button>
-                                    <Button text="Delete" style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
-                                        <HBox.margin>
-                                            <Insets right="5"/>
-                                        </HBox.margin>
-                                    </Button>
-                                    <Button text="Verify" style="-fx-background-color: #5bc0de; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;"/>
-                                </HBox>
-                                
-                                <TableView VBox.vgrow="ALWAYS" fx:id="voucherTable">
-                                    <columns>
-                                        <TableColumn text="Voucher No." prefWidth="150"/>
-                                        <TableColumn text="Date" prefWidth="150"/>
-                                        <TableColumn text="Description" prefWidth="200"/>
-                                        <TableColumn text="Debit Amount" prefWidth="150"/>
-                                        <TableColumn text="Credit Amount" prefWidth="150"/>
-                                        <TableColumn text="Status" prefWidth="100"/>
-                                    </columns>
-                                    <placeholder>
-                                        <Label text="No content in the table."/>
-                                    </placeholder>
-                                </TableView>
-                            </VBox>
-                        </content>
-                    </Tab>
-                    <Tab text="General Ledger"/>
-                </tabs>
-            </TabPane>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <HBox spacing="5" style="-fx-padding: 0 0 10 0;">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="searchField" promptText="Search..." prefWidth="200"/>
+                    <DatePicker fx:id="startDatePicker" promptText="Start Date"/>
+                    <DatePicker fx:id="endDatePicker" promptText="End Date"/>
+                </HBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="importButton" text="Import"
+                        style="-fx-background-color: #5bc0de; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="addButton" text="Add"
+                        style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="editButton" text="Edit"
+                        style="-fx-background-color: #f0ad4e; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="deleteButton" text="Delete"
+                        style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="verifyButton" text="Verify"
+                        style="-fx-background-color: #5bc0de; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 7 15;"/>
+            </HBox>
+
+            <TableView VBox.vgrow="ALWAYS" fx:id="voucherTable">
+                <columns>
+                    <TableColumn fx:id="voucherNoColumn" text="Voucher No." prefWidth="150"/>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
+                    <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="200"/>
+                    <TableColumn fx:id="categoryColumn" text="Category" prefWidth="150"/>
+                    <TableColumn fx:id="directionColumn" text="Direction" prefWidth="100"/>
+                    <TableColumn fx:id="debitAmountColumn" text="Debit Amount" prefWidth="100"/>
+                    <TableColumn fx:id="creditAmountColumn" text="Credit Amount" prefWidth="100"/>
+                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="100"/>
+                </columns>
+                <placeholder>
+                    <Label text="No content in the table."/>
+                </placeholder>
+            </TableView>
         </VBox>
     </center>
-</BorderPane> 
+</BorderPane>

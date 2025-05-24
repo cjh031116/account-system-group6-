@@ -4,41 +4,56 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="25" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml" fx:controller="com.accounting.system.controller.LoginController"
-      style="-fx-background-color: #f5f5f5;">
-    
-    <padding><Insets top="40" right="60" bottom="40" left="60"/></padding>
-    
-    <Label text="Accounting System Login" style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
-    
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.accounting.system.controller.LoginController"
+      spacing="15"
+      alignment="CENTER"
+      style="-fx-background-color: white;"
+      prefWidth="500" prefHeight="400">
+
+    <padding>
+        <Insets top="20" right="40" bottom="20" left="40"/>
+    </padding>
+
+    <Label text="Accounting System Login" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 0 0 30 0;"/>
+
     <GridPane vgap="20" hgap="15">
         <columnConstraints>
-            <ColumnConstraints minWidth="100"/>
-            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="100" prefWidth="100"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
         </columnConstraints>
-        
-        <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0" 
+
+        <Label text="Username" GridPane.rowIndex="0" GridPane.columnIndex="0"
                style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
-        <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1" 
-                  style="-fx-font-size: 14px;"/>
-        
-        <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0" 
+        <TextField fx:id="usernameField" promptText="Enter your username" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   style="-fx-font-size: 14px;"/>
+
+        <Label text="Password" GridPane.rowIndex="1" GridPane.columnIndex="0"
                style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
-        <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" 
-                      style="-fx-font-size: 14px;"/>
-        
-        <CheckBox fx:id="rememberMeCheckBox" text="Remember Me" GridPane.rowIndex="2" GridPane.columnIndex="1" 
+        <PasswordField fx:id="passwordField" promptText="Enter your password" GridPane.rowIndex="1"
+                       GridPane.columnIndex="1"
+                       style="-fx-font-size: 14px;"/>
+
+        <CheckBox fx:id="rememberMeCheckbox" text="Remember Me" GridPane.rowIndex="2" GridPane.columnIndex="1"
                   style="-fx-font-size: 14px;"/>
-        
-        <Label fx:id="errorLabel" textFill="RED" GridPane.rowIndex="3" GridPane.columnIndex="0" 
+
+        <Label fx:id="errorLabel" textFill="RED" GridPane.rowIndex="3" GridPane.columnIndex="0"
                GridPane.columnSpan="2" style="-fx-font-size: 12px;"/>
     </GridPane>
-    
+
+    <!--    <HBox spacing="10" alignment="CENTER_LEFT">-->
+    <!--        <CheckBox fx:id="rememberMeCheckbox" text="Remember Me"-->
+    <!--                 style="-fx-font-size: 14px;"/>-->
+    <!--    </HBox>-->
+
     <HBox spacing="20" alignment="CENTER">
-        <Button text="Login" onAction="#handleLogin" 
+        <Button fx:id="loginButton" text="Login" onAction="#handleLogin"
                 style="-fx-font-size: 14px; -fx-pref-width: 120px; -fx-background-color: #2196F3; -fx-text-fill: white;"/>
-        <Button text="Cancel" onAction="#handleCancel" 
+        <Button text="Cancel" onAction="#handleCancel"
                 style="-fx-font-size: 14px; -fx-pref-width: 120px; -fx-background-color: #e0e0e0;"/>
     </HBox>
-</VBox> 
+
+    <!--    <Label fx:id="errorLabel" style="-fx-text-fill: red; -fx-font-size: 12px;" wrapText="true"/>-->
+
+</VBox>
