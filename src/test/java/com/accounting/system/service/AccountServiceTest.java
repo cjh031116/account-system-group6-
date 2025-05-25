@@ -10,6 +10,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AccountServiceTest {
 
+
+
+    @Test
+    public void testUpdateAccount() {
+        AccountService accountService = new AccountServiceImpl();
+        Account account = accountService.getAccountByCode("1001");
+        if (account != null) {
+            account.setName("Updated Cash");
+            Account updatedAccount = accountService.updateAccount(account);
+            System.out.println(updatedAccount);
+            assertEquals("Updated Cash", updatedAccount.getName(), "account name should be updated");
+        }
+    }
+
+    @Test
+    public void testDeleteAccount() {
+        AccountService accountService = new AccountServiceImpl();
+        Long idToDelete = 1L; // Assuming an account with ID 1 exists
+        accountService.deleteAccount(idToDelete);
+    }
+
     @Test
     public void testGetAllAccounts() {
         AccountService accountService = new AccountServiceImpl();
