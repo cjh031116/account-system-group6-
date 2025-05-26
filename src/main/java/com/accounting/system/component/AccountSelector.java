@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Custom component for selecting accounts from a dropdown list.
- * Extends JavaFX ComboBox to provide account selection functionality.
+ * Extends JavaFX ComboBox to provide account selection functionality.11
  */
 public class AccountSelector extends ComboBox<Account> {
     // Service for account-related operations
