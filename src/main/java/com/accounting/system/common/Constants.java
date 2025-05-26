@@ -6,9 +6,9 @@ package com.accounting.system.common;
  */
 public class Constants {
     // Application information
-    public static final String APP_TITLE = "Accounting System"; // Application title
+    public static final String APP_TITLE = "Accounting System"; // Application title1
     public static final String APP_LOGIN_TITLE = "Accounting System - Login"; // Login window title
-    public static final String APP_VERSION = "1.0.0"; // Application version
+    public static final String APP_VERSION = "1.0.0"; // Application version 1.0.0
     
     // Window dimensions
     public static final double LOGIN_WINDOW_WIDTH = 500; // Login window width in pixels
