@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<VBox spacing="10" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.accounting.system.controller.ReportController"
+      style="-fx-padding: 10;">
+
+    <!-- 折线图 -->
+    <LineChart id="lineChart" title="Monthly Income and Expenses"
+               fx:id="lineChart"
+               legendVisible="true">
+        <xAxis><CategoryAxis label="Month" fx:id="xAxis"/></xAxis>
+        <yAxis><NumberAxis label="Amount"/></yAxis>
+    </LineChart>
+
+    <!-- 饼状图 -->
+    <PieChart id="pieChart" title="Expense Distribution"
+              fx:id="pieChart"
+              legendVisible="true"/>
+</VBox> 

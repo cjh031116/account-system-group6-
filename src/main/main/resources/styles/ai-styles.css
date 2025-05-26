@@ -1,0 +1,95 @@
+/* Base styles */
+.root {
+    -fx-font-family: "Segoe UI", Tahoma, Geneva, sans-serif;
+}
+
+/* Header styles */
+.header-panel {
+    -fx-background-color: linear-gradient(to right, #304FFE, #7B1FA2);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1);
+}
+
+.header-text {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Content area */
+.content-panel {
+    -fx-background-color: #f8f9fc;
+}
+
+/* Text area styling */
+.question-area, .answer-area {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-font-size: 14px;
+}
+
+.question-area {
+    -fx-background-color: #ffffff;
+}
+
+.answer-area {
+    -fx-background-color: #f0f5ff;
+    -fx-font-size: 14px;
+}
+
+/* Section labels */
+.section-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #444;
+}
+
+/* Button styling */
+.button {
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 8 15;
+}
+
+.query-button {
+    -fx-background-color: #304FFE;
+    -fx-text-fill: white;
+}
+
+.query-button:hover {
+    -fx-background-color: #1A237E;
+}
+
+.cancel-button {
+    -fx-background-color: #9e9e9e;
+    -fx-text-fill: white;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #757575;
+}
+
+.clear-button {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #555;
+    -fx-border-color: #ddd;
+}
+
+.clear-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Status indicator */
+.status-box {
+    -fx-padding: 5;
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+}
+
+.status-text {
+    -fx-text-fill: #555;
+    -fx-font-style: italic;
+}

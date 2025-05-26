@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.accounting.system.controller.AiController"
+            stylesheets="/styles/ai-styles.css">
+
+    <!-- Header -->
+    <top>
+        <HBox styleClass="header-panel" alignment="CENTER">
+            <padding><Insets top="15" bottom="15" left="20" right="20"/></padding>
+            <Label text="AI Assistant" styleClass="header-text">
+                <font>
+                    <Font name="System Bold" size="18.0"/>
+                </font>
+            </Label>
+        </HBox>
+    </top>
+
+    <!-- Main content -->
+    <center>
+        <VBox spacing="15" styleClass="content-panel">
+            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+            <!-- Question section -->
+            <VBox spacing="8">
+                <Label text="Monthly Budgets, Saving Goals, Cost-Cutting Recommendations From AI" styleClass="section-label"/>
+<!--                <TextArea fx:id="questionArea" prefRowCount="3"-->
+<!--                          promptText="What would you like to ask?"-->
+<!--                          styleClass="question-area"/>-->
+            </VBox>
+
+            <Separator/>
+
+            <!-- Answer section -->
+            <VBox spacing="8" VBox.vgrow="ALWAYS">
+                <Label text="AI Response:" styleClass="section-label"/>
+                <TextArea fx:id="aiAnswerArea" prefRowCount="10"
+                          wrapText="true" editable="false"
+                          styleClass="answer-area" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <!-- Status indicator -->
+            <HBox fx:id="statusBox" styleClass="status-box" alignment="CENTER_LEFT" visible="false">
+                <ProgressIndicator prefHeight="20" prefWidth="20"/>
+                <Label text="Thinking..." styleClass="status-text">
+                    <padding><Insets left="10"/></padding>
+                </Label>
+            </HBox>
+        </VBox>
+    </center>
+
+    <!-- Bottom button panel -->
+    <bottom>
+        <HBox spacing="15" alignment="CENTER_RIGHT" styleClass="button-panel">
+            <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+
+            <Button fx:id="clearButton" text="Clear" onAction="#handleClear" styleClass="clear-button"/>
+
+            <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel" styleClass="cancel-button"/>
+
+            <Button fx:id="queryButton" text="Ask AI" onAction="#handleQuery" styleClass="query-button" defaultButton="true"/>
+        </HBox>
+    </bottom>
+</BorderPane>
+
+

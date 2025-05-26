@@ -1,0 +1,93 @@
+.main-container {
+  -fx-background-color: #f5f5f5;
+}
+
+.menu-bar {
+  -fx-background-color: #2c3e50;
+}
+
+.menu-bar .menu .label {
+  -fx-text-fill: white;
+}
+
+.toolbar {
+  -fx-background-color: #34495e;
+  -fx-padding: 5px;
+}
+
+.welcome-label {
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+}
+
+.sidebar {
+  -fx-background-color: #2c3e50;
+  -fx-min-width: 200px;
+}
+
+.nav-button {
+  -fx-background-color: transparent;
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-pref-width: 150px;
+  -fx-alignment: CENTER_LEFT;
+  -fx-padding: 10px;
+}
+
+.nav-button:hover {
+  -fx-background-color: #34495e;
+}
+
+.search-bar {
+  -fx-background-color: white;
+  -fx-padding: 10px;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+.search-field {
+  -fx-pref-width: 200px;
+}
+
+.date-picker {
+  -fx-pref-width: 120px;
+}
+
+.action-button {
+  -fx-font-size: 12px;
+  -fx-padding: 5px 15px;
+  -fx-text-fill: white;
+}
+
+.add-button {
+  -fx-background-color: #27ae60;
+}
+
+.edit-button {
+  -fx-background-color: #3498db;
+}
+
+.delete-button {
+  -fx-background-color: #e74c3c;
+}
+
+.verify-button {
+  -fx-background-color: #f1c40f;
+}
+
+.action-button:hover {
+  -fx-opacity: 0.9;
+}
+
+.voucher-table {
+  -fx-background-color: white;
+}
+
+.table-column {
+  -fx-alignment: CENTER;
+  -fx-padding: 5px;
+}
+
+.pagination {
+  -fx-padding: 10px;
+}
