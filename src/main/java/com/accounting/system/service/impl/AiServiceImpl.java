@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class AiServiceImpl implements AiService {
 
     private OkHttpClient okHttpClient = null;
-
+    //重写
     @Override
     public String query(String message) {
         if (okHttpClient == null) {
